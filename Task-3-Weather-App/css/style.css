@@ -1,0 +1,116 @@
+/* Skycast. Warm amber accent. The background changes with the weather. */
+@property --g1 { syntax: "<color>"; inherits: true; initial-value: #1c1917; }
+@property --g2 { syntax: "<color>"; inherits: true; initial-value: #9a3412; }
+
+:root {
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-num: "Outfit", "Inter", system-ui, sans-serif;
+  --accent: #fbbf24; --accent-ink: #1c1917;
+  --text: #fff; --muted: rgba(255, 255, 255, .72);
+  --glass: rgba(10, 15, 25, .36); --glass-border: rgba(255, 255, 255, .16);
+}
+/* Sky colours: top is always dark enough for white text */
+[data-sky="ember"]   { --g1: #1c1917; --g2: #9a3412; }
+[data-sky="clear"]   { --g1: #b45309; --g2: #f59e0b; }
+[data-sky="night"]   { --g1: #0b1020; --g2: #1f2a44; }
+[data-sky="clouds"]  { --g1: #334155; --g2: #7b8ba1; }
+[data-sky="rain"]    { --g1: #12293b; --g2: #3f7391; }
+[data-sky="thunder"] { --g1: #18181b; --g2: #57575f; }
+[data-sky="snow"]    { --g1: #3b4a63; --g2: #a3b3c9; }
+[data-sky="mist"]    { --g1: #4f4a45; --g2: #a8a29e; }
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; font-family: var(--font-body); color: var(--text); line-height: 1.5;
+  background: radial-gradient(60rem 30rem at 85% -10%, rgba(255, 255, 255, .16), transparent 60%) no-repeat, linear-gradient(170deg, var(--g1), var(--g2)) fixed;
+  transition: --g1 .9s ease, --g2 .9s ease;
+}
+h1, h2, p { margin: 0; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.icon, .wx { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.icon { width: 20px; height: 20px; stroke-width: 2; flex: none; }
+.wx { width: 100%; height: 100%; stroke-width: 1.4; }
+
+.page { width: min(100% - 2rem, 980px); margin: 0 auto; padding: 1.25rem 0 2.5rem; }
+.glass { background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--glass-border); border-radius: 22px; box-shadow: 0 12px 40px rgba(0, 0, 0, .18); }
+
+/* Top bar */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.brand { display: flex; align-items: center; gap: .6rem; font-family: var(--font-num); font-weight: 600; font-size: 1.35rem; color: #fff; text-decoration: none; }
+.brand-logo { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px; background: var(--accent); color: var(--accent-ink); }
+.unit-toggle { display: flex; padding: 4px; border-radius: 999px; background: var(--glass); border: 1px solid var(--glass-border); }
+.unit-toggle button { border: 0; background: transparent; padding: .35rem .9rem; border-radius: 999px; font-weight: 600; transition: background-color .2s, color .2s; }
+.unit-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Search */
+.search { display: flex; gap: .6rem; margin-top: 1.5rem; }
+.search-box { flex: 1; display: flex; align-items: center; gap: .7rem; padding: 0 .5rem 0 1.1rem; border-radius: 16px; transition: border-color .2s, box-shadow .2s; }
+.search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(251, 191, 36, .25); }
+.search-box input { flex: 1; min-width: 0; padding: .95rem 0; background: transparent; border: 0; outline: 0; }
+.search-box input::placeholder { color: var(--muted); }
+.locate { width: 40px; height: 40px; display: grid; place-items: center; background: transparent; border: 0; border-radius: 12px; color: var(--muted); transition: background-color .2s, color .2s; }
+.locate:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+.btn { padding: 0 1.6rem; border: 0; border-radius: 16px; background: var(--accent); color: var(--accent-ink); font-weight: 700; transition: transform .15s, filter .2s; }
+.btn:hover { filter: brightness(1.08); } .btn:active { transform: translateY(1px); }
+.form-error { margin-top: .6rem; padding-left: .4rem; font-size: .9rem; font-weight: 600; color: #fde68a; }
+.form-error:empty { display: none; }
+.recent { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.recent button { padding: .3rem .85rem; font-size: .85rem; font-weight: 500; border-radius: 999px; background: rgba(255, 255, 255, .12); border: 1px solid var(--glass-border); transition: background-color .2s; }
+.recent button:hover { background: rgba(255, 255, 255, .22); }
+
+/* Status: loading, errors, setup */
+.status { margin-top: 1.25rem; padding: 3rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: .6rem; text-align: center; }
+.status .wx { width: 56px; height: 56px; }
+.status-title { font-family: var(--font-num); font-size: 1.5rem; font-weight: 500; }
+.status-text { max-width: 46ch; color: var(--muted); }
+.spinner { width: 46px; height: 46px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, .22); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Current weather */
+#weather { animation: fade .5s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.current { margin-top: 1.25rem; padding: 1.75rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.place { font-size: 1.6rem; font-weight: 600; line-height: 1.2; }
+.place small { font-size: 1.1rem; font-weight: 500; color: var(--muted); }
+.local-time { margin-top: .15rem; color: var(--muted); font-size: .95rem; }
+.temp-row { display: flex; align-items: flex-start; margin-top: .6rem; }
+.temp { font-family: var(--font-num); font-weight: 300; font-size: clamp(4.5rem, 15vw, 7.5rem); line-height: 1; letter-spacing: -.03em; }
+.temp-unit { margin-top: .6rem; font-family: var(--font-num); font-size: 1.8rem; font-weight: 300; color: var(--muted); }
+.cond { font-size: 1.25rem; font-weight: 600; text-transform: capitalize; }
+.hilo { margin-top: .15rem; color: var(--muted); }
+.current-icon { width: clamp(110px, 24vw, 190px); aspect-ratio: 1; flex: none; margin-inline: auto; }
+.current-icon .wx { stroke-width: 1; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .25)); }
+.ico-sun { color: #fde68a; }
+
+/* Detail tiles */
+.metrics { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.metric { flex: 1 1 200px; padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: .15rem; border-radius: 18px; }
+.metric-label { display: flex; align-items: center; gap: .5rem; font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.metric-label .icon { width: 17px; height: 17px; color: var(--accent); }
+.metric strong { font-family: var(--font-num); font-size: 1.7rem; font-weight: 500; line-height: 1.3; }
+.metric small { color: var(--muted); font-size: .85rem; }
+
+/* 5-day forecast */
+.forecast { margin-top: 1.75rem; }
+.forecast h2 { font-family: var(--font-num); font-size: 1.3rem; font-weight: 500; margin-bottom: .8rem; }
+.forecast-list { display: flex; gap: .8rem; overflow-x: auto; padding-bottom: .5rem; scroll-snap-type: x mandatory; }
+.day { flex: 1 0 140px; scroll-snap-align: start; padding: 1.1rem .9rem; display: flex; flex-direction: column; align-items: center; gap: .15rem; text-align: center; border-radius: 18px; transition: transform .2s, background-color .2s; }
+.day:hover { transform: translateY(-4px); background: rgba(10, 15, 25, .5); }
+.day-name { font-weight: 700; } .day-date { font-size: .8rem; color: var(--muted); }
+.day-icon { width: 54px; height: 54px; margin: .5rem 0 .2rem; }
+.day-desc { font-size: .82rem; color: var(--muted); text-transform: capitalize; min-height: 2.5em; }
+.day-temps { margin-top: .3rem; font-family: var(--font-num); font-size: 1.2rem; font-weight: 500; }
+.day-temps span { color: var(--muted); font-weight: 300; }
+.day-rain { font-size: .8rem; color: #fde68a; min-height: 1.3em; }
+
+.site-footer { margin-top: 2.5rem; text-align: center; font-size: .85rem; color: var(--muted); }
+
+@media (max-width: 560px) {
+  .search { flex-wrap: wrap; } .btn { flex: 1; padding: .85rem; }
+  .current { padding: 1.4rem 1.25rem; }
+  .current-main { flex: 1 1 100%; order: 2; } .current-icon { order: 1; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
