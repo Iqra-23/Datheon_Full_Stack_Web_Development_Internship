@@ -1,9 +1,6 @@
 "use strict";
 
-/* =========================================================
-   Skycast: live weather with the Fetch API and async/await.
-   Uses two OpenWeatherMap endpoints: current weather + 5-day forecast.
-   ========================================================= */
+
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 const STORE = { unit: "skycast.unit", recent: "skycast.recent", last: "skycast.last" };
 const TIMEOUT_MS = 10000;
@@ -13,11 +10,11 @@ const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(k
 const write = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage blocked */ } };
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-let units = read(STORE.unit, "metric"); // data is always stored in metric; converted for display
-let data = null;                        // { now, forecast } of the last successful search
-let requestId = 0;                      // ignores slow, outdated responses
+let units = read(STORE.unit, "metric");
+let data = null;                      
+let requestId = 0;                    
 
-/* ---------- Weather icons (inline SVG, one per condition) ---------- */
+
 const CLOUD = '<path d="M17.5 19H7a5 5 0 1 1 1.1-9.9A6 6 0 0 1 19.6 12 3.5 3.5 0 0 1 17.5 19z"/>';
 const CLOUD_UP = '<path d="M17.5 14H7a5 5 0 1 1 1.1-9.9A6 6 0 0 1 19.6 7 3.5 3.5 0 0 1 17.5 14z"/>';
 const PATHS = {
@@ -56,7 +53,6 @@ function describe(id, isDay) {
   return { icon: "cloud", sky: isDay ? "clouds" : "night" };
 }
 
-/* ---------- Formatting + unit conversion ---------- */
 const deg = (c) => Math.round(units === "metric" ? c : c * 1.8 + 32);
 const windText = (ms) => (units === "metric" ? `${Math.round(ms * 3.6)} km/h` : `${Math.round(ms * 2.237)} mph`);
 const visText = (m) => (m == null ? "N/A" : units === "metric" ? `${(m / 1000).toFixed(1)} km` : `${(m / 1609.34).toFixed(1)} mi`);
@@ -112,7 +108,7 @@ function setStatus(type, title = "", text = "") {
 
 const showError = (code) => { const [title, text] = MESSAGES[code] || MESSAGES.server; setStatus("error", title, text); };
 
-/* ---------- Load weather ---------- */
+
 async function loadWeather(query) {
   const id = ++requestId;
   setStatus("loading", "Fetching the latest weather…");
@@ -135,7 +131,7 @@ async function loadWeather(query) {
   }
 }
 
-/* ---------- Render ---------- */
+
 function dailyForecast(list, tz) {
   const days = new Map();
   list.forEach((item) => {
@@ -206,7 +202,7 @@ function render() {
     .join("");
 }
 
-/* ---------- Search, recent searches, location ---------- */
+
 const form = $("#searchForm");
 const input = $("#cityInput");
 const formError = $("#formError");
@@ -255,7 +251,6 @@ $("#locateBtn").addEventListener("click", () => {
   );
 });
 
-/* ---------- Unit toggle (no new request needed) ---------- */
 function setUnits(next) {
   units = next;
   write(STORE.unit, units);
@@ -264,7 +259,7 @@ function setUnits(next) {
 }
 document.querySelectorAll(".unit-toggle button").forEach((b) => b.addEventListener("click", () => setUnits(b.dataset.unit)));
 
-/* ---------- Start ---------- */
+
 setUnits(units);
 renderRecent();
 if (!CONFIG.API_KEY || CONFIG.API_KEY.includes("PASTE_YOUR")) {
