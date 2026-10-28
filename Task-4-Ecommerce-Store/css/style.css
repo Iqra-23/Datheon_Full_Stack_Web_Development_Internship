@@ -1,4 +1,4 @@
-
+/* Velora store. Rose red + deep wine on warm cream. Layout: CSS Grid + Flexbox. */
 :root {
   --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
@@ -51,24 +51,25 @@ img { display: block; max-width: 100%; }
 @keyframes bump { 40% { transform: scale(1.35); } }
 
 /* Hero */
-.hero { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; margin-top: 1.5rem; padding: clamp(1.75rem, 4vw, 3.25rem); color: #fff; border-radius: 28px; overflow: hidden; background: radial-gradient(40rem 22rem at 90% 0%, rgba(225, 29, 72, .5), transparent 60%), linear-gradient(135deg, #1c1917, var(--wine)); }
-.hero-copy { flex: 1 1 340px; }
-.eyebrow { font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fda4af; }
-.hero h1 { margin: .8rem 0 1rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(2.1rem, 5vw, 3.5rem); line-height: 1.08; max-width: 14ch; }
-.hero-text { max-width: 46ch; margin-bottom: 1.6rem; color: rgba(255, 255, 255, .78); }
-.hero-pics { flex: 1 1 300px; display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+.hero { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 1.25rem; padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3.5vw, 2.5rem); color: #fff; border-radius: 24px; overflow: hidden; background: radial-gradient(34rem 18rem at 92% 0%, rgba(225, 29, 72, .5), transparent 60%), linear-gradient(135deg, #1c1917, var(--wine)); }
+.hero-copy { flex: 1 1 320px; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fda4af; }
+.hero h1 { margin: .5rem 0 .6rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.12; max-width: 20ch; }
+.hero-text { max-width: 44ch; margin-bottom: 1.1rem; font-size: .95rem; color: rgba(255, 255, 255, .78); }
+.hero .btn { padding: .65rem 1.4rem; }
+.hero-pics { flex: 0 1 330px; display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .hero-pics:empty { display: none; }
-.hero-pics div { aspect-ratio: 3 / 4; padding: .9rem; display: grid; place-items: center; background: #fff; border-radius: 20px; box-shadow: 0 18px 40px rgba(0, 0, 0, .3); }
-.hero-pics div:nth-child(2) { transform: translateY(22px); }
-.hero-pics img { max-height: 100%; object-fit: contain; }
+.hero-pics div { aspect-ratio: 1; padding: .6rem; overflow: hidden; background: #fff; border-radius: 16px; box-shadow: 0 10px 24px rgba(0, 0, 0, .25); }
+.hero-pics div:nth-child(2) { transform: translateY(8px); }
+.hero-pics img { width: 100%; height: 100%; object-fit: contain; }
 
-.perks { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .75rem; margin-top: 1rem; }
-.perks li { display: flex; align-items: center; gap: .8rem; padding: .85rem 1.1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; font-size: .9rem; color: var(--muted); }
-.perks .icon { width: 26px; height: 26px; color: var(--brand); }
+.perks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .6rem; margin-top: .75rem; }
+.perks li { display: flex; align-items: center; gap: .7rem; padding: .6rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; font-size: .84rem; line-height: 1.35; color: var(--muted); }
+.perks .icon { width: 22px; height: 22px; color: var(--brand); }
 .perks strong { display: block; color: var(--ink); }
 
 /* Catalog */
-.catalog { padding: 3rem 0 4rem; }
+.catalog { padding: 2.25rem 0 4rem; }
 .catalog-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; }
 .catalog h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.15; }
 .count { color: var(--muted); font-size: .92rem; }
@@ -85,9 +86,9 @@ img { display: block; max-width: 100%; }
 .product { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform .25s, box-shadow .25s, border-color .25s; animation: rise .45s ease both; }
 .product:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: #d9d2ca; }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-.product-media { position: relative; aspect-ratio: 1; background: #fff; border-bottom: 1px solid var(--border); }
-.media-btn { width: 100%; height: 100%; padding: 1.6rem; display: grid; place-items: center; background: none; border: 0; }
-.media-btn img { max-height: 100%; object-fit: contain; transition: transform .35s ease; }
+.product-media { position: relative; aspect-ratio: 1; overflow: hidden; background: #fff; border-bottom: 1px solid var(--border); }
+.media-btn { position: absolute; inset: 0; width: 100%; height: 100%; padding: 1.6rem; display: block; background: none; border: 0; }
+.media-btn img { width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
 .product:hover .media-btn img { transform: scale(1.06); }
 .badges { position: absolute; left: .8rem; top: .8rem; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; }
 .badge { padding: .18rem .6rem; font-size: .72rem; font-weight: 700; border-radius: 999px; background: var(--ink); color: #fff; }
@@ -98,12 +99,14 @@ img { display: block; max-width: 100%; }
 .wish.on .icon { fill: currentColor; }
 .product-body { flex: 1; display: flex; flex-direction: column; gap: .4rem; padding: 1.1rem 1.2rem 1.25rem; }
 .product-cat { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
-.product-title { font-size: 1rem; font-weight: 700; line-height: 1.35; }
+.product-title { font-size: 1rem; font-weight: 700; line-height: 1.35; min-height: 2.7em; }
 .product-title button { padding: 0; text-align: left; font-weight: 700; background: none; border: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .product-title button:hover { color: var(--brand); }
 .rating { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--muted); }
-.stars { position: relative; font-size: 1rem; letter-spacing: 2px; line-height: 1; }
-.stars::before { content: "★★★★★"; background: linear-gradient(90deg, var(--ink) var(--r), #d6d3d1 var(--r)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stars { display: inline-flex; gap: 1px; }
+.stars i { font-style: normal; font-size: 1rem; line-height: 1; color: #d6d3d1; }
+.stars i.full { color: var(--ink); }
+.stars i.half { background: linear-gradient(90deg, var(--ink) 50%, #d6d3d1 50%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .price-row { display: flex; align-items: baseline; gap: .6rem; margin-top: auto; padding-top: .35rem; }
 .price-row strong { font-size: 1.3rem; font-weight: 700; }
 .price-row s { color: var(--muted); font-size: .9rem; }
@@ -162,7 +165,7 @@ img { display: block; max-width: 100%; }
 .modal-close { position: absolute; top: .9rem; right: .9rem; z-index: 5; }
 .pm { display: grid; grid-template-columns: 1fr; }
 .pm-media { display: grid; place-items: center; padding: 2.2rem; background: #fff; border-bottom: 1px solid var(--border); }
-.pm-media img { max-height: 300px; object-fit: contain; }
+.pm-media img { max-width: 100%; max-height: 300px; object-fit: contain; }
 .pm-info { display: flex; flex-direction: column; gap: .7rem; padding: 1.6rem; }
 .pm-info h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; line-height: 1.2; }
 .pm-desc { color: var(--muted); font-size: .95rem; }
@@ -200,3 +203,5 @@ img { display: block; max-width: 100%; }
 }
 @media (max-width: 420px) { .cart-label { display: none; } .grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; } .product-body { padding: .9rem; } .media-btn { padding: 1rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+
+@media (max-width: 560px) { .hero-pics { display: none; } }
