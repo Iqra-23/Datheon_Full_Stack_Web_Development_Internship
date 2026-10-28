@@ -2,9 +2,9 @@
 
 
 const API_URL = "https://fakestoreapi.com/products";
-const TAX_RATE = 0.08;          
-const SHIPPING_FLAT = 5.99;      
-const FREE_SHIPPING_OVER = 50;   
+const TAX_RATE = 0.08;           // simulated 8% sales tax
+const SHIPPING_FLAT = 5.99;      // simulated flat shipping
+const FREE_SHIPPING_OVER = 50;   // free shipping threshold
 const MAX_QTY = 10;
 const KEYS = { cart: "velora.cart", wishlist: "velora.wishlist" };
 const CATEGORIES = ["All", "Electronics", "Jewelry", "Clothing", "Saved"];
@@ -19,7 +19,7 @@ const round2 = (n) => Math.round(n * 100) / 100;
 
 const state = {
   products: [],
-  status: "loading", // loading | ready | error
+  status: "loading", 
   category: "All",
   query: "",
   sort: "featured",
@@ -29,8 +29,9 @@ const state = {
 
 const ICON_HEART = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/></svg>';
 
+
 function normalize(p) {
-  const onSale = p.id % 4 === 0; 
+  const onSale = p.id % 4 === 0; // demo sale: 15% off every 4th product
   return {
     id: p.id,
     title: p.title,
@@ -129,7 +130,11 @@ function calculateTotal() {
 }
 
 
-const starsHTML = (rate) => `<span class="stars" style="--r:${((rate / 5) * 100).toFixed(0)}%" aria-hidden="true"></span>`;
+const starsHTML = (rate) => {
+  const r = Math.round(rate * 2) / 2; // nearest half star
+  const stars = Array.from({ length: 5 }, (_, i) => `<i class="${r - i >= 1 ? "full" : r - i >= 0.5 ? "half" : "empty"}">★</i>`).join("");
+  return `<span class="stars" aria-hidden="true">${stars}</span>`;
+};
 
 function renderChips() {
   const counts = { All: state.products.length, Saved: state.wishlist.length };
@@ -384,8 +389,6 @@ coForm.addEventListener("submit", (e) => {
   }, 900);
 });
 ["coName", "coEmail", "coAddress"].forEach((id) => $(`#${id}`).addEventListener("input", () => fieldError(id, "")));
-
-
 
 $("#year").textContent = new Date().getFullYear();
 renderChips();
