@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iqra Sayyab | Datheon Full Stack Internship Projects</title>
+  <meta name="description" content="Four projects built during the Datheon Full Stack Web Development Internship: a portfolio, a task manager, a weather app and an e-commerce store." />
+  <meta name="theme-color" content="#0d1117" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111827'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='28' font-weight='700' text-anchor='middle' fill='white'%3EIS%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #0d1117; --surface: #151b24; --border: #263041; --text: #e8edf4; --muted: #9aa7b8; --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --font-head: "Sora", "Inter", system-ui, sans-serif; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font-body); color: var(--text); line-height: 1.6; background: radial-gradient(50rem 24rem at 50% -8%, rgba(255, 255, 255, .07), transparent 70%) no-repeat, var(--bg); }
+    h1, h2, h3, p, ul { margin: 0; padding: 0; list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 8px; }
+    .wrap { width: min(100% - 2.5rem, 1040px); margin-inline: auto; }
+
+    header { padding: 4rem 0 2.5rem; text-align: center; }
+    .eyebrow { display: inline-block; padding: .3rem .9rem; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; }
+    h1 { margin: 1.1rem auto .8rem; max-width: 20ch; font-family: var(--font-head); font-size: clamp(2rem, 5.5vw, 3.2rem); line-height: 1.12; letter-spacing: -.02em; }
+    .lead { max-width: 56ch; margin: 0 auto; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem; margin-top: 1.6rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: .7rem 1.3rem; font-weight: 600; font-size: .92rem; border-radius: 10px; border: 1.5px solid var(--border); transition: transform .15s, border-color .2s, background-color .2s; }
+    .btn:hover { transform: translateY(-1px); border-color: var(--text); }
+    .btn-light { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; padding-bottom: 4rem; }
+    .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform .25s, border-color .25s, box-shadow .25s; }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 18px 40px rgba(0, 0, 0, .35); }
+    .banner { display: flex; align-items: flex-end; justify-content: space-between; padding: 1.25rem 1.4rem; min-height: 120px; color: #fff; background: var(--grad); }
+    .banner b { font-family: var(--font-head); font-size: 2.6rem; line-height: 1; opacity: .95; }
+    .banner span { padding: .25rem .7rem; font-size: .75rem; font-weight: 600; background: rgba(0, 0, 0, .28); border-radius: 999px; }
+    .body { display: flex; flex-direction: column; flex: 1; gap: .7rem; padding: 1.4rem; }
+    .body h2 { font-family: var(--font-head); font-size: 1.3rem; line-height: 1.25; }
+    .body p { color: var(--muted); font-size: .95rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; padding-top: .3rem; }
+    .tags li { padding: .15rem .65rem; font-size: .78rem; font-weight: 500; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); border-radius: 999px; }
+    .links { display: flex; gap: .6rem; margin-top: .6rem; }
+    .links .btn { flex: 1; padding: .65rem 1rem; }
+    .links .live { background: var(--accent); border-color: var(--accent); color: #0d1117; }
+    .links .live:hover { filter: brightness(1.1); }
+
+    .t1 { --accent: #7aa2ff; --grad: linear-gradient(135deg, #1f3a8a, #4f7be8); }
+    .t2 { --accent: #2dd4bf; --grad: linear-gradient(135deg, #0f766e, #2dd4bf); }
+    .t3 { --accent: #fbbf24; --grad: linear-gradient(135deg, #b45309, #f59e0b); }
+    .t4 { --accent: #fb7185; --grad: linear-gradient(135deg, #3b0a1a, #e11d48); }
+
+    footer { padding: 2rem 0 2.5rem; border-top: 1px solid var(--border); text-align: center; font-size: .88rem; color: var(--muted); }
+    footer a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } header { padding-top: 3rem; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <span class="eyebrow">Datheon internship · 4 projects</span>
+    <h1>Full Stack Web Development Projects</h1>
+    <p class="lead">Hi, I'm Iqra Sayyab. These are the four tasks I built during my internship. Open a live demo, or read the code on GitHub.</p>
+    <div class="actions">
+      <a class="btn btn-light" href="https://github.com/Iqra-23/Datheon_Full_Stack_Web_Development_Internship" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
+      <a class="btn" href="mailto:iqrasyyab53@gmail.com">Contact me</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <ul class="grid">
+      <li class="card t1">
+        <div class="banner"><b>01</b><span>Portfolio</span></div>
+        <div class="body">
+          <h2>Portfolio Website</h2>
+          <p>A responsive portfolio with dark and light mode, project popups and a contact form.</p>
+          <ul class="tags"><li>HTML5</li><li>CSS3</li><li>JavaScript</li></ul>
+          <div class="links">
+            <a class="btn live" href="Task-1-Portfolio/">Live demo</a>
+            <a class="btn" href="https://github.com/Iqra-23/Datheon_Full_Stack_Web_Development_Internship/tree/main/Task-1-Portfolio" target="_blank" rel="noopener noreferrer">View code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card t2">
+        <div class="banner"><b>02</b><span>CRUD app</span></div>
+        <div class="body">
+          <h2>Task Manager and Productivity Tracker</h2>
+          <p>Add, edit and delete tasks with categories, due dates, filters, search and drag and drop. Saved with localStorage.</p>
+          <ul class="tags"><li>JavaScript ES6+</li><li>DOM</li><li>localStorage</li></ul>
+          <div class="links">
+            <a class="btn live" href="Task-2-Task-Manager/">Live demo</a>
+            <a class="btn" href="https://github.com/Iqra-23/Datheon_Full_Stack_Web_Development_Internship/tree/main/Task-2-Task-Manager" target="_blank" rel="noopener noreferrer">View code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card t3">
+        <div class="banner"><b>03</b><span>REST API</span></div>
+        <div class="body">
+          <h2>Weather Forecast App</h2>
+          <p>Search any city for live weather and a 5-day forecast. The background changes with the weather.</p>
+          <ul class="tags"><li>Fetch API</li><li>Async / Await</li><li>OpenWeatherMap</li></ul>
+          <div class="links">
+            <a class="btn live" href="Task-3-Weather-App/">Live demo</a>
+            <a class="btn" href="https://github.com/Iqra-23/Datheon_Full_Stack_Web_Development_Internship/tree/main/Task-3-Weather-App" target="_blank" rel="noopener noreferrer">View code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card t4">
+        <div class="banner"><b>04</b><span>E-commerce</span></div>
+        <div class="body">
+          <h2>E-Commerce Store</h2>
+          <p>A store with category filters, search, a slide-out cart with tax and shipping, and a demo checkout.</p>
+          <ul class="tags"><li>FakeStoreAPI</li><li>CSS Grid</li><li>State management</li></ul>
+          <div class="links">
+            <a class="btn live" href="Task-4-Ecommerce-Store/">Live demo</a>
+            <a class="btn" href="https://github.com/Iqra-23/Datheon_Full_Stack_Web_Development_Internship/tree/main/Task-4-Ecommerce-Store" target="_blank" rel="noopener noreferrer">View code</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <div class="wrap">&copy; <span id="year"></span> Iqra Sayyab · <a href="mailto:iqrasyyab53@gmail.com">iqrasyyab53@gmail.com</a></div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
