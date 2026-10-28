@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velora | Online Store</title>
+  <meta name="description" content="Velora is a modern online store demo with product filtering, search, a slide-out cart and a simulated checkout. Built with JavaScript and FakeStoreAPI." />
+  <meta name="theme-color" content="#e11d48" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e11d48'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' text-anchor='middle' fill='white'%3EV%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip" href="#catalog">Skip to products</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">Velora<span>.</span></a>
+      <div class="search">
+        <label class="sr-only" for="search">Search products</label>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="search" placeholder="Search products" autocomplete="off" />
+      </div>
+      <button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart, 0 items">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-label">Cart</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="container">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="eyebrow">New season · Free shipping over $50</p>
+          <h1 id="heroTitle">Find something you'll love, delivered fast.</h1>
+          <p class="hero-text">Electronics, jewelry and clothing in one place. Browse, save your favourites and check out in seconds.</p>
+          <a class="btn btn-brand" href="#catalog">Shop now</a>
+        </div>
+        <div class="hero-pics" id="heroPics" aria-hidden="true"></div>
+      </section>
+
+      <ul class="perks">
+        <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 6h13v11H1zM14 10h4l4 3v4h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg><span><strong>Free shipping</strong> on orders over $50</span></li>
+        <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg><span><strong>30-day returns</strong> no questions asked</span></li>
+        <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>Secure checkout</strong> demo, no real payment</span></li>
+      </ul>
+
+      <section class="catalog" id="catalog" aria-labelledby="catalogTitle">
+        <div class="catalog-head">
+          <div><h2 id="catalogTitle">Shop the collection</h2><p class="count" id="resultCount" aria-live="polite"></p></div>
+          <label class="sort">Sort by
+            <select id="sort">
+              <option value="featured">Featured</option>
+              <option value="price_asc">Price: low to high</option>
+              <option value="price_desc">Price: high to low</option>
+              <option value="rating">Top rated</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+        <div class="grid" id="productGrid"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="brand">Velora<span>.</span></span>
+      <p>&copy; <span id="year"></span> Velora demo store. Products from <a href="https://fakestoreapi.com" target="_blank" rel="noopener noreferrer">FakeStoreAPI</a>. Task 4 by Iqra Sayyab.</p>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Slide-out cart -->
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-head">
+      <h2 id="cartTitle">Your cart <span id="cartTitleCount"></span></h2>
+      <button class="icon-btn" id="cartClose" type="button" aria-label="Close cart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="ship-meter" id="shipMeter" hidden><p id="shipText"></p><div class="meter"><span id="shipBar"></span></div></div>
+    <ul class="lines" id="cartItems"></ul>
+    <div class="cart-empty" id="cartEmpty">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <h3>Your cart is empty</h3><p>Add something you like and it will show up here.</p>
+      <button class="btn btn-ghost" id="keepShopping" type="button">Continue shopping</button>
+    </div>
+    <div class="drawer-foot" id="cartFoot" hidden>
+      <dl class="totals" id="cartSummary"></dl>
+      <button class="btn btn-brand btn-block" id="checkoutBtn" type="button">Checkout</button>
+      <button class="link" id="clearCart" type="button">Clear cart</button>
+    </div>
+  </aside>
+
+
+  <dialog class="modal" id="productModal" aria-labelledby="pmTitle">
+    <button class="icon-btn modal-close" id="pmClose" type="button" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="pm">
+      <div class="pm-media"><img id="pmImage" src="" alt="" /></div>
+      <div class="pm-info">
+        <span class="product-cat" id="pmCat"></span>
+        <h2 id="pmTitle"></h2>
+        <div class="rating" id="pmRating"></div>
+        <p class="pm-desc" id="pmDesc"></p>
+        <div class="price-row" id="pmPrice"></div>
+        <button class="btn btn-brand btn-block" id="pmAdd" type="button">Add to cart</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal modal-sm" id="checkoutModal" aria-labelledby="coTitle">
+    <button class="icon-btn modal-close" id="coClose" type="button" aria-label="Close checkout"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <form class="checkout" id="coForm" novalidate>
+      <h2 id="coTitle">Checkout</h2>
+      <p class="muted" id="coSummary"></p>
+      <div class="field"><label for="coName">Full name</label><input id="coName" autocomplete="name" /><p class="error" id="coNameError" role="alert"></p></div>
+      <div class="field"><label for="coEmail">Email</label><input id="coEmail" type="email" autocomplete="email" /><p class="error" id="coEmailError" role="alert"></p></div>
+      <div class="field"><label for="coAddress">Shipping address</label><input id="coAddress" autocomplete="street-address" /><p class="error" id="coAddressError" role="alert"></p></div>
+      <button class="btn btn-brand btn-block" id="coSubmit" type="submit">Place order</button>
+      <p class="fine">This is a demo. No payment is taken and no order is sent.</p>
+    </form>
+    <div class="checkout done" id="coDone" hidden>
+      <div class="done-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2>Order confirmed</h2>
+      <p class="muted" id="coDoneText"></p>
+      <dl class="order-meta" id="coMeta"></dl>
+      <button class="btn btn-brand btn-block" id="coContinue" type="button">Continue shopping</button>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

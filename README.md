@@ -9,6 +9,7 @@ This repository has the tasks I completed during my internship at Datheon.
 | Task 1 | `Task-1-Portfolio` | Responsive portfolio website |
 | Task 2 | `Task-2-Task-Manager` | Task manager with CRUD and localStorage |
 | Task 3 | `Task-3-Weather-App` | Weather forecast app with OpenWeatherMap API |
+| Task 4 | `Task-4-Ecommerce-Store` | E-commerce store with a slide-out cart and checkout |
 
 ## Task 1: Portfolio Website
 
@@ -22,6 +23,10 @@ A task manager with categories, due dates, filters, search and drag and drop. Ta
 ## Task 3: Weather App
 
 A live weather app. Search any city to see the current weather and a 5-day forecast. The background changes with the weather. It uses the Fetch API, async / await and the OpenWeatherMap API. You need a free API key (see the README inside the task folder).
+
+## Task 4: E-Commerce Store
+
+An online store with products from FakeStoreAPI, category filter, search, a slide-out cart with quantity controls, tax and shipping calculation, and a demo checkout. The cart is saved with localStorage.
 
 ## How to run
 
